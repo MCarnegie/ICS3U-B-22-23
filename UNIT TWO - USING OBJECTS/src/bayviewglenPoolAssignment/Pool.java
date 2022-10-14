@@ -8,44 +8,44 @@ public class Pool {
 
         //prompts
         System.out.println("Please enter the length of pool in meters: ");
-        double l = in.nextDouble();
+        double length = in.nextDouble();
 
         System.out.println("Please enter the width in meters: ");
-        double w = in.nextDouble();
+        double width = in.nextDouble();
 
         System.out.println("Please enter the depth of shallow end in meters: ");
-        double hSallow = in.nextDouble();
+        double heightOfShallowEnd = in.nextDouble();
 
         System.out.println("Please enter the depth of the deep end in meters: ");
-        double hDeep = in.nextDouble();
+        double heightOfDeepEnd = in.nextDouble();
 
         System.out.println("Please enter the length of the transition in meters: ");
-        double trans = in.nextDouble();
+        double transitionSlope = in.nextDouble();
 
         System.out.println("Please enter the length of shallow end in meters: ");
-        double lOfShallow = in.nextDouble();
+        double lengthOfShallowEnd = in.nextDouble();
 
         System.out.println("Please enter the price of liner per m^2: ");
         double price = in.nextDouble();
         
         //Volume of pool
-        double lOfDeep = l - trans - lOfShallow;
-        double hOfTrans = hDeep-hSallow;
+        double lengthOfDeepEnd = length - transitionSlope - lengthOfShallowEnd;
+        double heightOfTransition = heightOfDeepEnd-heightOfShallowEnd;
 
-        double lOfTrans = Math.pow(trans,2) - Math.pow(hOfTrans, 2);
+        double lengthOfTransition = Math.pow(transitionSlope,2) - Math.pow(heightOfTransition, 2);
 
-        double volume = (lOfDeep* hDeep*w) + (lOfShallow*hSallow*w) + (hSallow*w*lOfTrans)
-         + (0.5*hOfTrans*lOfTrans*w);
+        double volume = (lengthOfDeepEnd* heightOfDeepEnd*width) + (lengthOfShallowEnd*heightOfShallowEnd*width) 
+        + (heightOfShallowEnd*width*lengthOfTransition) + (0.5*heightOfTransition*lengthOfTransition*width);
 
-        double lNeeded = (0.9*volume);
+        double klNeeded = (0.9*volume);
 
-        System.out.println("The amount of water you need to keep the pool at 90% is: " + lNeeded + "Kl");
+        System.out.println("The amount of water you need to keep the pool at 90% is: " + klNeeded + "Kl");
 
         //Surface area
         
-        double SurfaceArea = ((hDeep*w) + (2*(lOfDeep*hDeep)) + (lOfDeep*w)) 
-        + ((hSallow*w) + (2*(lOfShallow*hSallow)) + (lOfShallow*w)) + 
-        ((trans*w) + (2*(hOfTrans*lOfTrans)) + (2*(lOfTrans*hSallow))); 
+        double SurfaceArea = ((heightOfDeepEnd*width) + (2*(lengthOfDeepEnd*heightOfDeepEnd)) + (lengthOfDeepEnd*width)) 
+        + ((heightOfShallowEnd*width) + (2*(lengthOfShallowEnd*heightOfShallowEnd)) + (lengthOfShallowEnd*width)) + 
+        ((transitionSlope*width) + (2*(heightOfTransition*lengthOfTransition)) + (2*(lengthOfTransition*heightOfShallowEnd))); 
 
         System.out.println("the amount of lining needed is: " + SurfaceArea + "m^2");
 
