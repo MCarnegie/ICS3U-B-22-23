@@ -29,29 +29,35 @@ public class Pool {
         double price = in.nextDouble();
         
         //Volume of pool
-        double lengthOfDeepEnd = length - transitionSlope - lengthOfShallowEnd;
-        double heightOfTransition = heightOfDeepEnd-heightOfShallowEnd;
+        double heightOfTransition = (double) heightOfDeepEnd-heightOfShallowEnd;
+        double aSquaredMinusBsquared = (double) Math.pow(transitionSlope,2) - (double) Math.pow(heightOfTransition, 2);
+        double lengthOfTransition = Math.sqrt(aSquaredMinusBsquared);
+        double lengthOfDeepEnd = (double)length - (double)lengthOfTransition - (double)lengthOfShallowEnd;
+        
 
-        double lengthOfTransition = Math.pow(transitionSlope,2) - Math.pow(heightOfTransition, 2);
+        
 
         double volume = (lengthOfDeepEnd* heightOfDeepEnd*width) + (lengthOfShallowEnd*heightOfShallowEnd*width) 
         + (heightOfShallowEnd*width*lengthOfTransition) + (0.5*heightOfTransition*lengthOfTransition*width);
 
-        double klNeeded = (0.9*volume);
+        double lNeeded = 1000*(volume*0.9);
+        double lNeededRounded = Math.round(lNeeded*100)/100.0;
 
-        System.out.println("The amount of water you need to keep the pool at 90% is: " + klNeeded + "Kl");
+        System.out.println("The amount of water you need to keep the pool at 90% is: " + lNeededRounded + "L");
 
         //Surface area
         
         double SurfaceArea = ((heightOfDeepEnd*width) + (2*(lengthOfDeepEnd*heightOfDeepEnd)) + (lengthOfDeepEnd*width)) 
-        + ((heightOfShallowEnd*width) + (2*(lengthOfShallowEnd*heightOfShallowEnd)) + (lengthOfShallowEnd*width)) + 
+        + ((heightOfShallowEnd*width) + (2*(lengthOfShallowEnd*heightOfShallowEnd*0.5)) + (lengthOfShallowEnd*width)) + 
         ((transitionSlope*width) + (2*(heightOfTransition*lengthOfTransition)) + (2*(lengthOfTransition*heightOfShallowEnd))); 
+
+        double SurfaceAreaRounded = Math.round(SurfaceArea);
 
         System.out.println("the amount of lining needed is: " + SurfaceArea + "m^2");
 
         //Cost of liner
 
-        double liner = SurfaceArea*price;
+        double liner = SurfaceAreaRounded*price;
 
         System.out.println("the price of lining is: " + liner + "$");
 
