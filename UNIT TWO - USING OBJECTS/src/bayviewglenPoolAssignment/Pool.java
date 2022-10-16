@@ -28,37 +28,42 @@ public class Pool {
         System.out.println("Please enter the price of liner per m^2: ");
         double price = in.nextDouble();
         
-        //Volume of pool
+        //volume of pool
         double heightOfTransition = (double) heightOfDeepEnd-heightOfShallowEnd;
-        double aSquaredMinusBsquared = (double) Math.pow(transitionSlope,2) - (double) Math.pow(heightOfTransition, 2);
-        double lengthOfTransition = Math.sqrt(aSquaredMinusBsquared);
-        double lengthOfDeepEnd = (double)length - (double)lengthOfTransition - (double)lengthOfShallowEnd;
-        
+        double lengthOfTransition = Math.sqrt((double) Math.pow(transitionSlope,2) - (double) Math.pow(heightOfTransition, 2));
+        double lengthOfDeepEnd = (double)length - lengthOfTransition - lengthOfShallowEnd;
 
-        
-
-        double volume = (lengthOfDeepEnd* heightOfDeepEnd*width) + (lengthOfShallowEnd*heightOfShallowEnd*width) 
+        double volume = (lengthOfDeepEnd*heightOfDeepEnd*width) + (lengthOfShallowEnd*heightOfShallowEnd*width) 
         + (heightOfShallowEnd*width*lengthOfTransition) + (0.5*heightOfTransition*lengthOfTransition*width);
+        /*
+         * calculates the volume of the pool by getting the volume of the deep end, 
+         * the shallow end, the square area above the transition, and the transition.
+         */
 
         double lNeeded = 1000*(volume*0.9);
         double lNeededRounded = Math.round(lNeeded*100)/100.0;
+        //rounds the volume to two decimal points
 
         System.out.println("The amount of water you need to keep the pool at 90% is: " + lNeededRounded + "L");
 
-        //Surface area
-        
+        //Surface area  
         double SurfaceArea = ((heightOfDeepEnd*width) + (2*(lengthOfDeepEnd*heightOfDeepEnd)) + (lengthOfDeepEnd*width)) 
-        + ((heightOfShallowEnd*width) + (2*(lengthOfShallowEnd*heightOfShallowEnd*0.5)) + (lengthOfShallowEnd*width)) + 
+        + ((heightOfShallowEnd*width) + ((lengthOfShallowEnd*heightOfShallowEnd)) + (lengthOfShallowEnd*width)) + 
         ((transitionSlope*width) + (2*(heightOfTransition*lengthOfTransition)) + (2*(lengthOfTransition*heightOfShallowEnd))); 
 
-        double SurfaceAreaRounded = Math.round(SurfaceArea);
+        /*
+         * calculates the surface area by getting the surface area of the deep end, transition, and shallow end.
+         */
+
+        double SurfaceAreaRounded = Math.round(SurfaceArea*100)/100.0;
+        //rounds the surface area to two decimal points
 
         System.out.println("the amount of lining needed is: " + SurfaceArea + "m^2");
 
         //Cost of liner
-
         double liner = SurfaceAreaRounded*price;
-
+        //calculates the price of liner by getting the surface area rounded multiplied by the price of lienr per m^2
+        
         System.out.println("the price of lining is: " + liner + "$");
 
         in.close();
