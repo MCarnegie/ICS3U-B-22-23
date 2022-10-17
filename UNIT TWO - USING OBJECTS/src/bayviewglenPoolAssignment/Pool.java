@@ -48,8 +48,8 @@ public class Pool {
 
         //Surface area  
         double SurfaceArea = ((heightOfDeepEnd*width) + (2*(lengthOfDeepEnd*heightOfDeepEnd)) + (lengthOfDeepEnd*width)) 
-        + ((heightOfShallowEnd*width) + ((lengthOfShallowEnd*heightOfShallowEnd)) + (lengthOfShallowEnd*width)) + 
-        ((transitionSlope*width) + (2*(heightOfTransition*lengthOfTransition)) + (2*(lengthOfTransition*heightOfShallowEnd))); 
+        + ((heightOfShallowEnd*width) + (2*(lengthOfShallowEnd*heightOfShallowEnd)) + (lengthOfShallowEnd*width)) + 
+        ((transitionSlope*width) + ((heightOfTransition*lengthOfTransition)/2) + (2*(lengthOfTransition*heightOfShallowEnd))); 
 
         /*
          * calculates the surface area by getting the surface area of the deep end, transition, and shallow end.
