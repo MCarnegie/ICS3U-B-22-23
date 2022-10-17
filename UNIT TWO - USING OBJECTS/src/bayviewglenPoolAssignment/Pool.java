@@ -30,7 +30,7 @@ public class Pool {
         
         //volume of pool
         double heightOfTransition = (double) heightOfDeepEnd-heightOfShallowEnd;
-        double lengthOfTransition = Math.sqrt((double) Math.pow(transitionSlope,2) - (double) Math.pow(heightOfTransition, 2));
+        double lengthOfTransition = Math.sqrt(Math.pow(transitionSlope,2) - Math.pow(heightOfTransition, 2));
         double lengthOfDeepEnd = (double)length - lengthOfTransition - lengthOfShallowEnd;
 
         double volume = (lengthOfDeepEnd*heightOfDeepEnd*width) + (lengthOfShallowEnd*heightOfShallowEnd*width) 
