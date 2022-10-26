@@ -296,7 +296,35 @@ public class CodingBatLogic1 {
         return 0;
     }
     
+    public int blueTicket(int a, int b, int c) {
+      if((a+b) == 10 || (b+c) == 10 ||(a+c) == 10)
+        return 10;
+      else if((a+b) >= (b+c+10) || (a+b) >= (a+c+10)) 
+        return 5;
+      else
+        return 0;
+    }
+  
+    public boolean shareDigit(int a, int b) {
+      if(a/10 == b/10 || a%10 == b%10 || a/10 == b%10 || b/10 == a%10)
+        return true;
+      else
+        return false;
+    }
+    
+    
+    public int sumLimit(int a, int b) {
+      String a1 = String.valueOf(a);
+      int lOfA = a1.length();
+      String sum = String.valueOf(a+b);
+      int lOfSum = sum.length();
+      if(lOfSum>lOfA)
+        return a;
+      else
+        return a + b;
       
+    }
+    
       
     
 }
