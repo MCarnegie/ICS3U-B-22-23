@@ -106,6 +106,113 @@ public class CodingBatLogic1 {
       return false;
     }
     
+    public boolean old35(int n) {
+  
+      if((n%3) == 0 && (n%5) == 0)
+        return false;
+      else if((n%3) == 0 || (n%5) == 0)
+        return true;
+      else
+        return false;
+      
+      
+    }
+    
+    
+    public boolean less20(int n) {
+      if((n+2)%20 == 0 || ((n+1)%20) == 0 )
+      return true;
+      
+      return false;
+        
+      
+    }
+    
+    
+    public boolean nearTen(int num) {
+      if((num%10)>2 && (num%10)<8)
+      return false;
+      else
+      return true;
+      
+    }
+
+    public int teenSum(int a, int b) {
+      if((a>=13 && a<=19) || (b>=13 && b<=19))
+      return 19;
+      else
+      return a+b;
+      
+    }
+    
+    
+    public boolean answerCell(boolean isMorning, boolean isMom, boolean isAsleep) {
+      if(isAsleep)
+      return false;
+      else if(isMorning && isMom)
+      return true;
+      else if(isMorning && !isMom)
+      return false;
+      else
+      return true;
+    }
+    
+    
+    public int teaParty(int tea, int candy) {
+      if(tea<5 || candy<5)
+      return 0;
+      else if(2*candy <= tea || 2*tea <= candy)
+      return 2;
+      else
+      return 1;
+    }
+    
+    
+    public String fizzString(String str) {
+      String f = "f";
+      String b = "b";
+      String firstl = str.substring(0,1);
+      String lastl = str.substring(str.length()-1);
+      if(firstl.equals(f) && lastl.equals(b))
+      return "FizzBuzz";
+      else if((firstl.equals(f)))
+      return "Fizz";
+      else if(lastl.equals(b))
+      return "Buzz";
+      else
+      return str;
+      
+    }
+
+    public String fizzString2(int n) {
+      if((n%3) == 0 && (n%5) == 0)
+        return "FizzBuzz!";
+      else if((n%3) == 0)
+        return "Fizz!";
+      else if((n%5) == 0)
+        return "Buzz!";
+      else
+        return n+"!";
+        
+    }
+    
+    public boolean twoAsOne(int a, int b, int c) {
+      if(a + b == c || a + c == b || c + b == a)
+        return true;
+      else
+        return false;
+    }
+
+
+    public boolean inOrder(int a, int b, int c, boolean bOk) {
+      if(bOk && c>b)
+        return true;
+      else if (c>b && b>a)
+        return true;
+      else
+      return false;
+    }
+    
     
       
       
