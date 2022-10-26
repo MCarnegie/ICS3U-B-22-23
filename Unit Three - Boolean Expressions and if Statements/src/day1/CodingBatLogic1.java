@@ -213,6 +213,88 @@ public class CodingBatLogic1 {
       return false;
     }
     
+    public boolean inOrderEqual(int a, int b, int c, boolean equalOk) {
+      if(equalOk && a<=b && b<=c && c>=b)
+        return true;
+      else if(a<b && b<c && c>b)
+        return true;
+      return false;
+    }
+    
+    public boolean lastDigit(int a, int b, int c) {
+
+      int aL = a%10;
+      int bL = b%10;
+      int cL = c%10;
+      
+      if((aL == bL || aL == cL) ||(bL == aL || bL == cL) || (cL == aL || cL == bL) )
+        return true;
+      else
+      return false;
+      
+    }
+    
+    public boolean lessBy10(int a, int b, int c) {
+      if(a<=b-10 || a<=c-10 || c<=b-10 || b<=a-10 || c<=a-10 ||b<=c-10)
+        return true;
+      else
+      return false;
+    }
+    
+    public int withoutDoubles(int die1, int die2, boolean noDoubles) {
+      if(noDoubles && die1 == die2){
+        die1 +=1;
+        if(die1>=7){
+        die1 = 1;
+        return die1 + die2;
+        }else{
+        return die1 + die2;
+        }
+      }else{
+        return die1 + die2;
+      }
+      
+    }
+    
+    public int maxMod5(int a, int b) {
+      if(a==b){
+        return 0;
+      }else if((a%5) == (b%5)){
+        if(a<b){
+          return a;
+        }else{
+          return b;
+        }
+      }else if (a>b){
+        return a;
+      }else{
+        return b;
+      }
+      
+      
+        
+    }
+    
+    public int redTicket(int a, int b, int c) {
+      if(a == 2 && b == 2 && c == 2 )
+        return 10;
+      else if(a == b && b == c && a == c)
+        return 5;
+      else if(a != b && a != c)
+        return 1;
+      else
+        return 0;
+    }
+    
+    
+    public int greenTicket(int a, int b, int c) {
+      if(a == b && b == c && c == a)
+        return 20;
+      else if(a == b || b == c || c == a )
+        return 10;
+      else
+        return 0;
+    }
     
       
       
