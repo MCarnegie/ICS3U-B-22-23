@@ -62,7 +62,7 @@ public class Blackjack {
 
         while(!complete){
         try{
-        System.out.println("do you want to play again? (1) Yes (2) No");
+        System.out.println("Do you want to play again? (1) Yes (2) No");
         int answer = Integer.parseInt(in.nextLine());
 
         if(answer == 1){
@@ -72,10 +72,10 @@ public class Blackjack {
             complete = true;
             result =  false;
         }else{
-            System.out.println("invalid answer");
+            System.out.println("Invalid answer");
         }
         }catch(NumberFormatException ex){
-            System.out.println("invalid answer");
+            System.out.println("Invalid answer");
         }
         }
         return result;
