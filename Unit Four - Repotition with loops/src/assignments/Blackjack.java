@@ -36,6 +36,7 @@ public class Blackjack {
 
             int result = playHand(playerHand, dealerHand);
 
+
             if(result == WIN){
                 wallet += bet;
             }else if(result == LOST){
@@ -55,7 +56,30 @@ public class Blackjack {
     }
 
     private static boolean playAgain() {
-        return false;
+        
+        boolean complete = false;
+        boolean result = false;
+
+        while(!complete){
+        try{
+        System.out.println("do you want to play again? (1) Yes (2) No");
+        int answer = Integer.parseInt(in.nextLine());
+
+        if(answer == 1){
+            complete = true;
+            result =  true;
+        }else if(answer == 2){
+            complete = true;
+            result =  false;
+        }else{
+            System.out.println("invalid answer");
+        }
+        }catch(NumberFormatException ex){
+            System.out.println("invalid answer");
+        }
+        }
+        return result;
+
     }
 
     // return win if player wins, return lost if player lost and tie if they tie
