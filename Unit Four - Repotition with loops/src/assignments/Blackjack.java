@@ -26,6 +26,7 @@ public class Blackjack {
         boolean stillPlaying = true;
 
         while(stillPlaying){
+            System.out.println("The money that could have gone to your kids is: " + wallet + "$");
             int bet = getBet(wallet);
             String playerHand = getCard() + " " + getCard();
             String dealerHand = getCard();
@@ -33,19 +34,23 @@ public class Blackjack {
             displayHand(dealerHand, true, "Dealer: ");
             displayHand(playerHand, false, "Player: ");
             
-
+            //returns who won
             int result = playHand(playerHand, dealerHand);
 
 
             if(result == WIN){
+                System.out.println("YOU WIN!");
                 wallet += bet;
+                System.out.println("The money you have: " + wallet + "$");
             }else if(result == LOST){
+                System.out.println("YOU LOSE");
                 wallet -= bet;
+                System.out.println("The money you have: " + wallet + "$");
             }
             
             if(wallet< MIN_BET){
                 stillPlaying = false;
-                System.out.println("you are broke big L");
+                System.out.println("have fun on the streets");
             }else{
                 stillPlaying = playAgain();
             }
@@ -84,7 +89,89 @@ public class Blackjack {
 
     // return win if player wins, return lost if player lost and tie if they tie
     private static int playHand(String playerHand, String dealerHand) {
-        return 0;
+        playerHand = playerTurn(playerHand);
+        dealerHand = dealerTurn(dealerHand);
+
+        int playerScore = getCardValue(playerHand);
+        int dealerScore = getCardValue(dealerHand);
+
+        if(playerScore <= 21 && (dealerScore> playerScore) || (playerScore <= 21 && (dealerScore > 21)))
+            return WIN;
+        else if(playerScore> 21 || dealerScore > playerScore)
+            return LOST;
+        else
+            return TIE;
+
+    }
+
+    private static int getCardValue(String cards) {
+        int numAces = 0;
+
+        int scoreBeforeAces = 0;
+        for(int i = 0; i<cards.length(); i++){
+            String s = cards.substring(i, i+1);
+            if("JQK1".indexOf(s)>=0)
+                scoreBeforeAces += 10;
+            else if("23456789".indexOf(s) >= 0){
+                scoreBeforeAces += Integer.parseInt(s);
+            }else if("A".indexOf(s) >= 0)
+                numAces++;
+
+
+        }
+
+
+        if(numAces > 0 && (scoreBeforeAces + 11 + numAces - 1) <= 21)
+        scoreBeforeAces += 11 + numAces - 1;
+        else
+        scoreBeforeAces += numAces;
+
+        return scoreBeforeAces;
+
+    }
+
+
+    private static String dealerTurn(String dealerHand) {
+        dealerHand += " " + getCard();
+        displayHand(dealerHand, false, "Dealer hand: ");
+        while(getCardValue(dealerHand) < 17){
+            dealerHand += " " + getCard();
+            displayHand(dealerHand, false, "Dealer hand: ");
+        }
+
+        return dealerHand;
+    }
+
+    private static String playerTurn(String playerHand) {
+        displayHand(playerHand, false, "Player Hand: ");
+
+        while(true){;
+           if(takeCard()){
+                playerHand += " " + getCard();
+                displayHand(playerHand, false, "Player Hand: ");
+                if(getCardValue(playerHand) > 21)
+                    return playerHand;
+                
+           }else{
+                return playerHand;
+           }
+        }
+    }
+
+    
+
+    private static boolean takeCard() {
+        while(true){
+            System.out.println("Hit (1) or Stand (2): ");
+            String result = in.nextLine();
+
+            if(result.equals("1")){
+                return true;
+            }else if(result.equals("2"))
+                return false;
+            else
+                System.out.println("Invalid input");
+        }
     }
 
     private static void displayHand(String cards, boolean isHidden, String label) {
