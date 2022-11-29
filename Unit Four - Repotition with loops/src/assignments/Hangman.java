@@ -20,17 +20,19 @@ public class Hangman {
 
         int option = getPlayerOption();
          if (option == LETTER) {
-            String letter = getLetter(chosenLetters);
-            chosenLetters += letter;
+             String letter = getLetter(chosenLetters);
+             chosenLetters += letter;
             if (!isInPhrase(letter, phrase)) {
                numWrong++;
                drawHangman(numWrong);
             }
          }else {
-            String answer = getAnswer();
-            if(answer.equals(phrase)){
-                System.out.println("YOU WIN!");
-            }
+             String answer = getAnswer();
+             if(answer.equals(phrase)){
+               System.out.println("YOU WIN!");
+             }else{
+                System.out.println("WRONG!");
+             }
          }
 
 
@@ -53,12 +55,8 @@ public class Hangman {
         while(true){
             System.out.println("What is your solution?: ");
             String answer = in.nextLine().toUpperCase();
-            if(VALID_CHARS.indexOf(answer) >=0){
-                return answer;
-            }else if(VALID_CHARS.indexOf(answer) <0){
-                System.out.println("Invalid Answer");
-            }
-
+            return answer;
+            
         }
 
     }
