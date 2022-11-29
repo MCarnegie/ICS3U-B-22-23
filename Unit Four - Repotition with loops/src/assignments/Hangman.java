@@ -10,6 +10,9 @@ public class Hangman {
     public static void main(String[] args) {
         
         String phrase = getPhrase();
+        for (int i = 0; i < 21; i++) {
+          System.out.println();  
+        }
         int numWrong = 0;
         String chosenLetters = "";
 
@@ -26,12 +29,15 @@ public class Hangman {
                numWrong++;
                drawHangman(numWrong);
             }
-         }else {
+         }else{
              String answer = getAnswer();
              if(answer.equals(phrase)){
                System.out.println("YOU WIN!");
+               numWrong = 20;
              }else{
                 System.out.println("WRONG!");
+                numWrong++;
+                drawHangman(numWrong);
              }
          }
 
@@ -54,7 +60,7 @@ public class Hangman {
     private static String getAnswer() {
         while(true){
             System.out.println("What is your solution?: ");
-            String answer = in.nextLine().toUpperCase();
+            String answer = new Scanner(System.in).nextLine().toUpperCase();
             return answer;
             
         }
@@ -94,7 +100,7 @@ public class Hangman {
         while(true){
             System.out.println("Please enter a letter. Chosen Letters are: ");
             getLettersString(chosenLetters);
-            String letter = in.nextLine().toUpperCase();
+            String letter = new Scanner(System.in).nextLine().toUpperCase();
             if(letter.length() > 1){
                 System.out.println("Only one letter please!");
             }else if(VALID_CHARS.indexOf(letter)<0){
