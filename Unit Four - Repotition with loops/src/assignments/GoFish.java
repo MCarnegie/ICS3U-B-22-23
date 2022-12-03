@@ -38,7 +38,10 @@ public class GoFish {
         System.out.println("Player 2 Score: " + scoreTwo);
         System.out.println("Player 3 Score: " + scoreThree);
 
-        displayNewHand(yourHand, "Your Hand: ");
+        String newPlayerHand = NewHand(yourHand, false);
+
+        displayNewHand(newPlayerHand, false, "Your Hand: ");
+        
 
         /*while(!isOver){
 
@@ -49,16 +52,26 @@ public class GoFish {
         }*/
 
 
-
+ 
         //playerTurn();
         //computerTurn();
         
     }
 
-    private static void displayNewHand(String cards, String label) {
-        String finalHand = cards;
+    private static void displayNewHand(String cards, boolean isHidden, String label) {
+        if(isHidden){
+
+        }else{
+            System.out.println(label + cards);
+        }
+    }
+
+    private static String NewHand(String cards, boolean isComputer) {
+        String firstHand = cards;
         
         
+        
+        // make it for for the other players very simple just dont be a speedy cack sus toon
         for(int i = 0; i<cards.length(); i++){
             String s = cards.substring(i, i+1);
             String restOf = cards.substring(i+1);
@@ -93,9 +106,44 @@ public class GoFish {
 
 
         }
+        
+        firstHand = cards;
+        
+        for(int b = 0; b<firstHand.length()-1; b++){
+            String letter = firstHand.substring(b, b+1);
+            String letter2 = firstHand.substring(b+1, b+2);
+            if(letter.equals(" ")){
+                if(firstHand.indexOf(letter) == 0){
+                    firstHand = firstHand.substring(1);
+                    if(firstHand.indexOf(" ") == 0){
+                        firstHand = firstHand.substring(1);
+                        b = 0;
+                    }else{
+                    b = 0;
+                    }
+                }
+            }
+            if(letter.equals(" ") && letter2.equals(" ")){
+                if(firstHand.indexOf(letter) == 0){
+                    firstHand = firstHand.substring(1);
+                    if(firstHand.indexOf(" ") == 0){
+                        firstHand = firstHand.substring(1);
+                        b = 0;
+                    }else{
+                    b = 0;
+                    }
+                }else{
+                firstHand = firstHand.substring(0,b+1) + firstHand.substring(b+2);
+                b = 0;
+                }
+            } 
+        }
 
-        finalHand = cards;
-        System.out.println(label + finalHand);
+
+
+
+        
+        return firstHand;
 
     }
 
