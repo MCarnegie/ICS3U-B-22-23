@@ -2,6 +2,8 @@ package assignments;
 
 import java.util.Scanner;
 
+import javax.swing.plaf.TreeUI;
+
 public class GoFish {
     static Scanner in = new Scanner(System.in);
     private static final int NUM_SUITS = 4;
@@ -28,28 +30,62 @@ public class GoFish {
         displayHand(playerThreeHand, true, "Player 3: ");
 
         
-        int scoreP = getScore(yourHand);
-        int scoreOne = getScore(playerOneHand);
-        int scoreTwo = getScore(playerTwoHand);
-        int scoreThree = getScore(playerThreeHand);
+        int scoreP = getScore(yourHand, true);
+        int scoreOne = getScore(playerOneHand, true);
+        int scoreTwo = getScore(playerTwoHand, true);
+        int scoreThree = getScore(playerThreeHand, true);
 
         System.out.println("Your Score: " + scoreP);
         System.out.println("Player 1 Score: " + scoreOne);
         System.out.println("Player 2 Score: " + scoreTwo);
         System.out.println("Player 3 Score: " + scoreThree);
 
-        String newPlayerHand = NewHand(yourHand, false);
-
-        displayNewHand(newPlayerHand, false, "Your Hand: ");
         
+        
+        
+        yourHand = NewHand(yourHand);
+        displayHand(yourHand, false, "Your Hand: ");
+        
+        playerOneHand = NewHand(playerOneHand);
+        displayHand(playerOneHand, true, "PLayer 1 Hand: ");
 
-        /*while(!isOver){
+        playerTwoHand = NewHand(playerTwoHand);
+        displayHand(playerTwoHand, true, "PLayer 2 Hand: ");
+
+        playerThreeHand = NewHand(playerThreeHand);
+        displayHand(playerThreeHand, true, "PLayer 2 Hand: ");
+        //while(!isOver){
+
+            //it should go like this, after displaying the new hand it should let you do your turn 
+            //than display it than make your new hand than display the neww hand with your new score
+            // during this secquence it should check to see if your score is equal to 10
 
 
+            //this should be the same with the npcs except the cards are hidden
 
+        //completes your turn, displays the old hand, caluculates your score, gets your new hand, displays the new hand 
+        yourHand = Turns(yourHand, false);
+        displayHand(yourHand, false, "Your Hand: ");
+        scoreP = getScore(yourHand, false);
+        yourHand = NewHand(yourHand);
+        displayHand(yourHand, false, "Your Hand: ");
 
-
-        }*/
+        playerOneHand = Turns(playerOneHand, false);
+        displayHand(playerOneHand, false, "Your Hand: ");
+        scoreOne = getScore(playerOneHand, true);
+        playerOneHand = NewHand(playerOneHand);
+        displayHand(playerOneHand, false, "Your Hand: ");
+        
+        
+        //gets your score and displays it
+        
+        System.out.println("Your Score: " + scoreP);
+        System.out.println("Player 1 Score: " + scoreOne);
+        
+        
+       
+        
+        //}
 
 
  
@@ -58,20 +94,28 @@ public class GoFish {
         
     }
 
-    private static void displayNewHand(String cards, boolean isHidden, String label) {
-        if(isHidden){
+    
 
-        }else{
-            System.out.println(label + cards);
-        }
+    private static String Turns(String cards, boolean isComputer) {
+       if(isComputer){
+
+       }else{
+
+       }
+
+
+
+        return "hi";
     }
 
-    private static String NewHand(String cards, boolean isComputer) {
+
+
+    private static String NewHand(String cards) {
         String firstHand = cards;
+       
         
         
         
-        // make it for for the other players very simple just dont be a speedy cack sus toon
         for(int i = 0; i<cards.length(); i++){
             String s = cards.substring(i, i+1);
             String restOf = cards.substring(i+1);
@@ -112,17 +156,6 @@ public class GoFish {
         for(int b = 0; b<firstHand.length()-1; b++){
             String letter = firstHand.substring(b, b+1);
             String letter2 = firstHand.substring(b+1, b+2);
-            if(letter.equals(" ")){
-                if(firstHand.indexOf(letter) == 0){
-                    firstHand = firstHand.substring(1);
-                    if(firstHand.indexOf(" ") == 0){
-                        firstHand = firstHand.substring(1);
-                        b = 0;
-                    }else{
-                    b = 0;
-                    }
-                }
-            }
             if(letter.equals(" ") && letter2.equals(" ")){
                 if(firstHand.indexOf(letter) == 0){
                     firstHand = firstHand.substring(1);
@@ -136,7 +169,17 @@ public class GoFish {
                 firstHand = firstHand.substring(0,b+1) + firstHand.substring(b+2);
                 b = 0;
                 }
-            } 
+            }else if(letter.equals(" ")){
+                if(firstHand.indexOf(letter) == 0){
+                    firstHand = firstHand.substring(1);
+                    if(firstHand.indexOf(" ") == 0){
+                        firstHand = firstHand.substring(1);
+                        b = 0;
+                    }else{
+                    b = 0;
+                    }
+                }
+            }
         }
 
 
@@ -147,7 +190,7 @@ public class GoFish {
 
     }
 
-    private static int getScore(String cards) {
+    private static int getScore(String cards, boolean isFirstTurn) {
        int score = 0;
 
         for(int i = 0; i<cards.length(); i++){
@@ -166,7 +209,7 @@ public class GoFish {
 
 
         }
-        if(score>=3){
+        if(score>=3 && isFirstTurn){
             score--;
         }
 
@@ -174,8 +217,19 @@ public class GoFish {
     }
 
     private static void displayHand(String cards, boolean isHidden, String label) {
+        String botHand = "";
         if(isHidden){
-            System.out.println(label + "XX" + " " + "XX" + " " + "XX" + " " + "XX" + " " + "XX");
+           for(int i = 0; i<cards.length()-1; i++){
+            String letter1 = cards.substring(i, i+1);
+            String letter2 = cards.substring(i+1, i+2);
+            if("023456789JQKHDCSA".indexOf(letter1)>=0 && "023456789JQKHDCSA".indexOf(letter2)>=0){
+                botHand += "XX" + " ";
+            }
+
+
+           } 
+
+           System.out.println(label + botHand);
         }else{
             System.out.println(label + cards);
         }
