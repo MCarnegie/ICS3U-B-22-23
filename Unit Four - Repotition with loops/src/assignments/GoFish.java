@@ -1,8 +1,8 @@
 package assignments;
 
+import java.lang.reflect.Method;
 import java.util.Scanner;
 
-import javax.swing.plaf.TreeUI;
 
 public class GoFish {
     static Scanner in = new Scanner(System.in);
@@ -25,9 +25,9 @@ public class GoFish {
 
 
         displayHand(yourHand, false, "Your Hand: ");
-        displayHand(playerOneHand, true, "Player 1: ");
-        displayHand(playerTwoHand, true, "Player 2: ");
-        displayHand(playerThreeHand, true, "Player 3: ");
+        displayHand(playerOneHand, false, "Player 1: ");
+        displayHand(playerTwoHand, false, "Player 2: ");
+        displayHand(playerThreeHand, false, "Player 3: ");
 
         
         int scoreP = getScore(yourHand, true);
@@ -47,13 +47,13 @@ public class GoFish {
         displayHand(yourHand, false, "Your Hand: ");
         
         playerOneHand = NewHand(playerOneHand);
-        displayHand(playerOneHand, true, "PLayer 1 Hand: ");
+        displayHand(playerOneHand, false, "PLayer 1 Hand: ");
 
         playerTwoHand = NewHand(playerTwoHand);
-        displayHand(playerTwoHand, true, "PLayer 2 Hand: ");
+        displayHand(playerTwoHand, false, "PLayer 2 Hand: ");
 
         playerThreeHand = NewHand(playerThreeHand);
-        displayHand(playerThreeHand, true, "PLayer 2 Hand: ");
+        displayHand(playerThreeHand, false, "PLayer 3 Hand: ");
         //while(!isOver){
 
             //it should go like this, after displaying the new hand it should let you do your turn 
@@ -64,23 +64,20 @@ public class GoFish {
             //this should be the same with the npcs except the cards are hidden
 
         //completes your turn, displays the old hand, caluculates your score, gets your new hand, displays the new hand 
-        yourHand = Turns(yourHand, false);
+        
+        Turns(yourHand, playerOneHand, playerTwoHand, playerThreeHand, false);
         displayHand(yourHand, false, "Your Hand: ");
         scoreP = getScore(yourHand, false);
         yourHand = NewHand(yourHand);
         displayHand(yourHand, false, "Your Hand: ");
 
-        playerOneHand = Turns(playerOneHand, false);
-        displayHand(playerOneHand, false, "Your Hand: ");
-        scoreOne = getScore(playerOneHand, true);
-        playerOneHand = NewHand(playerOneHand);
-        displayHand(playerOneHand, false, "Your Hand: ");
+        
         
         
         //gets your score and displays it
         
-        System.out.println("Your Score: " + scoreP);
-        System.out.println("Player 1 Score: " + scoreOne);
+        /*System.out.println("Your Score: " + scoreP);
+        System.out.println("Player 1 Score: " + scoreOne);*/
         
         
        
@@ -89,33 +86,131 @@ public class GoFish {
 
 
  
-        //playerTurn();
-        //computerTurn();
+       
         
     }
 
     
 
-    private static String Turns(String cards, boolean isComputer) {
-       if(isComputer){
+    private static void Turns(String yourHand, String playerOneHand, String playerTwoHand, String playerThreeHand, boolean isComputer) {
+       
+      
+        if(isComputer){
 
-       }else{
+        }else{
+         
+       
+        String whichPlayer = getPlayer();
+
+        String card = getUserCard();
+          
+
+            
+          
+
+
+
+            if(whichPlayer.equals("player 1")){
+                takeCards(playerOneHand, yourHand, card);
+            }else if(whichPlayer.equals("player 2")){
+                takeCards(playerTwoHand, yourHand, card);
+            }else if(whichPlayer.equals("player 3")){
+                takeCards(playerThreeHand, yourHand, card);
+            }
+
+
 
        }
 
 
 
-        return "hi";
+        
+    }
+
+
+
+    private static String getUserCard() {
+        
+        while(true){
+            System.out.println("What card do you want?");
+            String card = in.nextLine().toUpperCase();
+            if(card.equals("10")){
+                card = "1";
+            }
+            if("123456789JQKA".indexOf(card)>=0){
+                return card;
+            }else{
+                System.out.println("invalid card");
+            }
+        }
+    }
+
+
+
+    private static String getPlayer() {
+        
+        while(true){
+            System.out.println("Which player do you want to ask? (Player 1, Player 2, or Player 3)");
+            String whichPlayer = in.nextLine().toUpperCase();
+            if(whichPlayer.equals("PLAYER 1") || whichPlayer.equals("PLAYER 2") || whichPlayer.equals("PLAYER 3")){
+                return whichPlayer;
+            }else{
+                System.out.println("invalid player");
+            }
+        }
+    }
+
+
+
+    private static void takeCards(String playerHand, String yourHand, String card) {
+        
+        
+            if(card.equals("10")){
+                card = "1";
+            }
+       
+             
+                for(int i = 0; i<playerHand.length(); i++){
+                    String s = playerHand.substring(i, i+1);
+                    if(card.equals(s)){
+
+                        if(card.equals("1")){
+                            playerHand = playerHand.substring(0, playerHand.indexOf(card)) + playerHand.substring(playerHand.indexOf(card)+3);
+                            playerHand = fixSpaces(playerHand);
+                            yourHand = yourHand + " " + card + "0" + getSuit();
+                            
+                        }else{
+
+                        playerHand = playerHand.substring(0, playerHand.indexOf(card)) + playerHand.substring(playerHand.indexOf(card)+2);
+                        playerHand = fixSpaces(playerHand);
+                        yourHand = yourHand + " " + card + getSuit();
+                        
+                        }
+
+
+
+                    }else if(i == playerHand.length()){
+                        yourHand = yourHand + " " + getCard();
+                    }
+
+
+                }
+
+            
+
+
+            
+        
+
+
+
     }
 
 
 
     private static String NewHand(String cards) {
         String firstHand = cards;
-       
-        
-        
-        
+
         for(int i = 0; i<cards.length(); i++){
             String s = cards.substring(i, i+1);
             String restOf = cards.substring(i+1);
@@ -152,7 +247,20 @@ public class GoFish {
         }
         
         firstHand = cards;
+
+        firstHand = fixSpaces(firstHand);
         
+        
+
+
+
+
+        
+        return firstHand;
+
+    }
+
+    private static String fixSpaces(String firstHand) {
         for(int b = 0; b<firstHand.length()-1; b++){
             String letter = firstHand.substring(b, b+1);
             String letter2 = firstHand.substring(b+1, b+2);
@@ -182,13 +290,11 @@ public class GoFish {
             }
         }
 
-
-
-
-        
         return firstHand;
 
     }
+
+
 
     private static int getScore(String cards, boolean isFirstTurn) {
        int score = 0;
