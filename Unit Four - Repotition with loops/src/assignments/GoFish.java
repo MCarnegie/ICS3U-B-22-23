@@ -1,6 +1,5 @@
 package assignments;
 
-import java.lang.reflect.Method;
 import java.util.Scanner;
 
 
@@ -24,10 +23,10 @@ public class GoFish {
         String playerThreeHand = getCard() + " " + getCard() + " " + getCard() + " " + getCard() + " " + getCard();
 
 
-        displayHand(yourHand, false, "Your Hand: ");
+       /*displayHand(yourHand, false, "Your Hand: ");
         displayHand(playerOneHand, false, "Player 1: ");
         displayHand(playerTwoHand, false, "Player 2: ");
-        displayHand(playerThreeHand, false, "Player 3: ");
+        displayHand(playerThreeHand, false, "Player 3: ");*/
 
         
         int scoreP = getScore(yourHand, true);
@@ -65,11 +64,32 @@ public class GoFish {
 
         //completes your turn, displays the old hand, caluculates your score, gets your new hand, displays the new hand 
         
-        Turns(yourHand, playerOneHand, playerTwoHand, playerThreeHand, false);
+        String temp = Turns(yourHand, playerOneHand, playerTwoHand, playerThreeHand, false);
+        yourHand = temp.substring(0, temp.indexOf("~"));
+        if(yourHand.equals("")){
+            yourHand = getCard() + " " + getCard() + " " + getCard() + " " + getCard() + " " + getCard();
+        }
+        if(temp.indexOf("!")>=0){
+            playerOneHand = temp.substring(temp.indexOf("~") + 1, temp.indexOf("!"));
+            if(playerOneHand.equals("")){
+                playerOneHand = getCard() + " " + getCard() + " " + getCard() + " " + getCard() + " " + getCard();
+            }
+        }else if(temp.indexOf("@")>=0){
+            playerTwoHand = temp.substring(temp.indexOf("~") + 1, temp.indexOf("@"));
+            if(playerTwoHand.equals("")){
+                playerTwoHand = getCard() + " " + getCard() + " " + getCard() + " " + getCard() + " " + getCard();
+            }
+        }else{
+            playerThreeHand = temp.substring(temp.indexOf("~") + 1, temp.indexOf("#"));
+            if(playerThreeHand.equals("")){
+                playerThreeHand = getCard() + " " + getCard() + " " + getCard() + " " + getCard() + " " + getCard();
+            }
+        }
         displayHand(yourHand, false, "Your Hand: ");
         scoreP = getScore(yourHand, false);
         yourHand = NewHand(yourHand);
         displayHand(yourHand, false, "Your Hand: ");
+        System.out.println("Your Score: " + scoreP);
 
         
         
@@ -92,7 +112,7 @@ public class GoFish {
 
     
 
-    private static void Turns(String yourHand, String playerOneHand, String playerTwoHand, String playerThreeHand, boolean isComputer) {
+    private static String Turns(String yourHand, String playerOneHand, String playerTwoHand, String playerThreeHand, boolean isComputer) {
        
       
         if(isComputer){
@@ -105,22 +125,25 @@ public class GoFish {
         String card = getUserCard();
           
 
-            
-          
 
-
-
-            if(whichPlayer.equals("player 1")){
-                takeCards(playerOneHand, yourHand, card);
-            }else if(whichPlayer.equals("player 2")){
-                takeCards(playerTwoHand, yourHand, card);
-            }else if(whichPlayer.equals("player 3")){
-                takeCards(playerThreeHand, yourHand, card);
+            if(whichPlayer.equals("PLAYER 1")){
+                yourHand = takeCards(playerOneHand, yourHand, card, true);
+                playerOneHand = takeCards(playerOneHand, yourHand, card, false);
+                return yourHand + "~" + playerOneHand + "!";
+            }else if(whichPlayer.equals("PLAYER 2")){
+                yourHand = takeCards(playerTwoHand, yourHand, card, true);
+                playerTwoHand = takeCards(playerTwoHand, yourHand, card, false);
+                return yourHand + "~" + playerTwoHand + "@";
+            }else if(whichPlayer.equals("PLAYER 3")){
+                yourHand = takeCards(playerThreeHand, yourHand, card, true);
+                playerThreeHand = takeCards(playerThreeHand, yourHand, card, false);
+                return yourHand + "~" + playerThreeHand + "#";
             }
 
 
 
        }
+        return "SYSTEM OVERLOAD PLEASE RESET IDK WHY THIS IS HAPPENING AHHHHHHHHHHHHHHHHHHHHHH IF YOU SEE THIS DURING THE GAME MR.D THIS SHOULD NEVER HAPPEN PLEASE DONT GIVE ME A 0%!!!!!";
 
 
 
@@ -162,47 +185,40 @@ public class GoFish {
 
 
 
-    private static void takeCards(String playerHand, String yourHand, String card) {
-        
-        
-            if(card.equals("10")){
-                card = "1";
-            }
-       
+    private static String takeCards(String computerHand, String yourHand, String card, boolean isCurrentPlayerHand) {
+
              
-                for(int i = 0; i<playerHand.length(); i++){
-                    String s = playerHand.substring(i, i+1);
+                for(int i = 0; i<computerHand.length(); i++){
+                    String s = computerHand.substring(i, i+1);
                     if(card.equals(s)){
 
                         if(card.equals("1")){
-                            playerHand = playerHand.substring(0, playerHand.indexOf(card)) + playerHand.substring(playerHand.indexOf(card)+3);
-                            playerHand = fixSpaces(playerHand);
+                            computerHand = computerHand.substring(0, computerHand.indexOf(card)) + computerHand.substring(computerHand.indexOf(card)+3);
+                            computerHand = fixSpaces(computerHand);
                             yourHand = yourHand + " " + card + "0" + getSuit();
                             
                         }else{
 
-                        playerHand = playerHand.substring(0, playerHand.indexOf(card)) + playerHand.substring(playerHand.indexOf(card)+2);
-                        playerHand = fixSpaces(playerHand);
+                        computerHand = computerHand.substring(0, computerHand.indexOf(card)) + computerHand.substring(computerHand.indexOf(card)+2);
+                        computerHand = fixSpaces(computerHand);
                         yourHand = yourHand + " " + card + getSuit();
                         
                         }
 
 
 
-                    }else if(i == playerHand.length()){
+                    }else if(i == computerHand.length()){
                         yourHand = yourHand + " " + getCard();
                     }
 
 
                 }
 
-            
-
-
-            
-        
-
-
+                if(isCurrentPlayerHand){
+                    return yourHand;
+                }else{
+                    return computerHand;
+                }
 
     }
 
