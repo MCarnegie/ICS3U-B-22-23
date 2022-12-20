@@ -51,60 +51,37 @@ public class GoFish {
 
         System.out.println("--------------------------------------------");
         
-        //Player 
-        String whichPlayer = getPlayer(false, false , false);
-        String card = getUserCard(false, false , false);
-        System.out.println("Player they picked: " + whichPlayer + " card they want: " + card);
-        turnEnd(yourHand, whichPlayer, card, scoreP, false, false, false);
+        yourTurn();
         System.out.println("--------------------------------------------");
-
-        //Computer 1
-        whichPlayer = getPlayer(true, false , false);
-        card = getUserCard(true, false , false);
-        System.out.println("Player they picked: " + whichPlayer + " card they want: " + card);
-        turnEnd(playerOneHand, whichPlayer, card, scoreP, true, false, false);
+        /*playerOneTurn();
         System.out.println("--------------------------------------------");
+        playerTwoTurn();
+        System.out.println("--------------------------------------------");
+        playerThreeTurn();*/
+       
 
     }
 
-   private static void turnEnd(String currentPlayerHand, String whichPlayer, String card, int score, boolean isP1, boolean isP2, boolean isP3){
-        
-        if(isP1){
-            currentPlayerHand = takeCards(whichPlayer, currentPlayerHand, card);
-            displayHand(currentPlayerHand, false, "Player 1 Hand: ");
-            scoreOne = getScore(currentPlayerHand, false, scoreOne);
-            System.out.println("Player 1 Score: " + scoreOne);
-            currentPlayerHand = NewHand(currentPlayerHand);
-            displayHand(currentPlayerHand, false, "Player 1 Hand: ");
-        }else if(isP2){
-            currentPlayerHand = takeCards(whichPlayer, currentPlayerHand, card);
-            displayHand(currentPlayerHand, false, "Player 2 Hand: ");
-            scoreTwo = getScore(currentPlayerHand, false, scoreTwo);
-            System.out.println("Player 2 Score: " + scoreTwo);
-            currentPlayerHand = NewHand(currentPlayerHand);
-            displayHand(currentPlayerHand, false, "Player 2 Hand: ");
-        }else if(isP3){
-            currentPlayerHand = takeCards(whichPlayer, currentPlayerHand, card);
-            displayHand(currentPlayerHand, false, "Player 3 Hand: ");
-            scoreThree = getScore(currentPlayerHand, false, scoreThree);
-            System.out.println("Player 3 Score: " + scoreThree);
-            currentPlayerHand = NewHand(currentPlayerHand);
-            displayHand(currentPlayerHand, false, "Player 3 Hand: ");
-        }else{
-            currentPlayerHand = takeCards(whichPlayer, currentPlayerHand, card);
-            displayHand(currentPlayerHand, false, "Your Hand: ");
-            scoreP = getScore(currentPlayerHand, false, scoreP);
-            System.out.println("Your Score: " + scoreP);
-            currentPlayerHand = NewHand(currentPlayerHand);
-            displayHand(currentPlayerHand, false, "Your Hand: ");
-        }
-        
-        System.out.println(playerOneHand);
-        System.out.println(playerTwoHand);
-        System.out.println(playerThreeHand);
-        
-   }
+    private static void yourTurn(){
+        String whichPlayer = getPlayer(false, false, false);
+        String card = getUserCard(false, false, false);
+        takeCards(whichPlayer, yourHand, card);
+        scoreP = getScore(yourHand, false, scoreP);
+        yourHand = NewHand(yourHand);
+        displayAll();
 
+    }
+
+    private static void displayAll(){
+        displayHand(yourHand, false, "Your Hand: ");
+        displayHand(playerOneHand, false, "Player 1 Hand: ");
+        displayHand(playerTwoHand, false, "Player 2 Hand: ");
+        displayHand(playerThreeHand, false, "Player 3 Hand: ");
+        System.out.println("your score: " + scoreP);
+        System.out.println("Player 1 score: " + scoreOne);
+        System.out.println("Player 2 score: " + scoreTwo);
+        System.out.println("Player 3 score: " + scoreThree);
+    }
 
     private static String getUserCard(boolean isP1, boolean isP2, boolean isP3) {
         if(isP1 || isP2 || isP3){
@@ -432,4 +409,3 @@ public class GoFish {
     }
 
 }
-
