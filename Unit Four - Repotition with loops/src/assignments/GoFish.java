@@ -36,9 +36,6 @@ public class GoFish {
         System.out.println("Player 1 Score: " + scoreOne);
         System.out.println("Player 2 Score: " + scoreTwo);
         System.out.println("Player 3 Score: " + scoreThree);
-
-        
-        
         
         yourHand = NewHand(yourHand);
         displayHand(yourHand, false, "Your Hand: ");
@@ -53,46 +50,59 @@ public class GoFish {
         displayHand(playerThreeHand, false, "PLayer 3 Hand: ");
 
         System.out.println("--------------------------------------------");
-        //while(!isOver){
-
-            //it should go like this, after displaying the new hand it should let you do your turn 
-            //than display it than make your new hand than display the neww hand with your new score
-            // during this secquence it should check to see if your score is equal to 10
-
-
-            //this should be the same with the npcs except the cards are hidden
-
-        //completes your turn, displays the old hand, caluculates your score, gets your new hand, displays the new hand 
         
         //Player 
         String whichPlayer = getPlayer(false, false , false);
         String card = getUserCard(false, false , false);
         System.out.println("Player they picked: " + whichPlayer + " card they want: " + card);
         turnEnd(yourHand, whichPlayer, card, scoreP, false, false, false);
-        takeCards(whichPlayer, yourHand, card);
-        displayHand(yourHand, false, "Your Hand: ");
-        scoreP = getScore(yourHand, false, scoreP);
-        yourHand = NewHand(yourHand);
-        displayHand(yourHand, false, "Your Hand: ");
-        System.out.println("Your Score: " + scoreP);
-        System.out.println(playerOneHand);
-        System.out.println(playerTwoHand);
-        System.out.println(playerThreeHand);
-
         System.out.println("--------------------------------------------");
 
         //Computer 1
-       
+        whichPlayer = getPlayer(true, false , false);
+        card = getUserCard(true, false , false);
+        System.out.println("Player they picked: " + whichPlayer + " card they want: " + card);
+        turnEnd(playerOneHand, whichPlayer, card, scoreP, true, false, false);
+        System.out.println("--------------------------------------------");
+
     }
 
    private static void turnEnd(String currentPlayerHand, String whichPlayer, String card, int score, boolean isP1, boolean isP2, boolean isP3){
-        takeCards(whichPlayer, currentPlayerHand, card);
-        displayHand(currentPlayerHand, false, "Your Hand: ");
         
-        scoreP = getScore(cu, false, scoreP);
-        currentPlayerHand = NewHand(currentPlayerHand);
-        displayHand(currentPlayerHand, false, "Your Hand: ");
-        System.out.println("Your Score: " + scoreP);
+        if(isP1){
+            currentPlayerHand = takeCards(whichPlayer, currentPlayerHand, card);
+            displayHand(currentPlayerHand, false, "Player 1 Hand: ");
+            scoreOne = getScore(currentPlayerHand, false, scoreOne);
+            System.out.println("Player 1 Score: " + scoreOne);
+            currentPlayerHand = NewHand(currentPlayerHand);
+            displayHand(currentPlayerHand, false, "Player 1 Hand: ");
+        }else if(isP2){
+            currentPlayerHand = takeCards(whichPlayer, currentPlayerHand, card);
+            displayHand(currentPlayerHand, false, "Player 2 Hand: ");
+            scoreTwo = getScore(currentPlayerHand, false, scoreTwo);
+            System.out.println("Player 2 Score: " + scoreTwo);
+            currentPlayerHand = NewHand(currentPlayerHand);
+            displayHand(currentPlayerHand, false, "Player 2 Hand: ");
+        }else if(isP3){
+            currentPlayerHand = takeCards(whichPlayer, currentPlayerHand, card);
+            displayHand(currentPlayerHand, false, "Player 3 Hand: ");
+            scoreThree = getScore(currentPlayerHand, false, scoreThree);
+            System.out.println("Player 3 Score: " + scoreThree);
+            currentPlayerHand = NewHand(currentPlayerHand);
+            displayHand(currentPlayerHand, false, "Player 3 Hand: ");
+        }else{
+            currentPlayerHand = takeCards(whichPlayer, currentPlayerHand, card);
+            displayHand(currentPlayerHand, false, "Your Hand: ");
+            scoreP = getScore(currentPlayerHand, false, scoreP);
+            System.out.println("Your Score: " + scoreP);
+            currentPlayerHand = NewHand(currentPlayerHand);
+            displayHand(currentPlayerHand, false, "Your Hand: ");
+        }
+        
+        System.out.println(playerOneHand);
+        System.out.println(playerTwoHand);
+        System.out.println(playerThreeHand);
+        
    }
 
 
@@ -195,7 +205,7 @@ public class GoFish {
 
 
 
-    private static void takeCards(String otherHand, String currentPlayerHand, String card) {
+    private static String takeCards(String otherHand, String currentPlayerHand, String card) {
         String temp = otherHand;
         String temp2 = currentPlayerHand;
         boolean hasCard = false;
@@ -208,12 +218,14 @@ public class GoFish {
                     otherHand = otherHand.substring(0, otherHand.indexOf(card)) + otherHand.substring(otherHand.indexOf(card)+3);
                     otherHand = fixSpaces(otherHand);
                     currentPlayerHand = currentPlayerHand + " " + card + "0" + getSuit();
+                    currentPlayerHand = fixSpaces(currentPlayerHand);
                     hasCard = true;
                     
                 }else{
                     otherHand = otherHand.substring(0, otherHand.indexOf(card)) + otherHand.substring(otherHand.indexOf(card)+2);
                     otherHand = fixSpaces(otherHand);
                     currentPlayerHand = currentPlayerHand + " " + card + getSuit();
+                    currentPlayerHand = fixSpaces(currentPlayerHand);
                     hasCard = true;
 
                 }
@@ -245,6 +257,9 @@ public class GoFish {
         }else{
             yourHand = currentPlayerHand;
         }
+        
+        return currentPlayerHand;
+        
 
     }
 
