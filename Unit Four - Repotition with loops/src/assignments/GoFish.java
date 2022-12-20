@@ -25,7 +25,7 @@ public class GoFish {
     static boolean isOver = true;
     static boolean isFirstTurn = true;
     
-    public static void main(String[] args){
+    public static void main(String[] args)throws InterruptedException{
         
         while(isOver){
             scoreP = getScore(yourHand, true, scoreP);
@@ -58,9 +58,9 @@ public class GoFish {
                 String whichPlayer = getPlayer(false, false , false);
                 String card = getUserCard(false, false , false); 
                 endTurn(yourHand, whichPlayer, card, scoreP, false, false, false, "Your Hand: ", "Your score: ");
-                
+                Thread.sleep(2000);
+
                 System.out.println("--------------------------------------------");System.out.println("               Player 1's Turn");System.out.println();
-                
                
                 whichPlayer = getPlayer(true, false , false);
                 card = getUserCard(true, false , false); if(card.equals("1"))System.out.println("for a " + card + "0");else System.out.println("for a " + card);
@@ -68,19 +68,18 @@ public class GoFish {
                 
                 System.out.println("--------------------------------------------");System.out.println("               Player 2's Turn");System.out.println();
                 
-                
                 whichPlayer = getPlayer(false, true , false);
                 card = getUserCard(false, true , false);if(card.equals("1"))System.out.println("for a " + card + "0");else System.out.println("for a " + card);
                 endTurn(playerTwoHand, whichPlayer, card, scoreTwo, false, true, false, "Player 2 Hand: ", "Player 2 score: ");
                 
                 System.out.println("--------------------------------------------");System.out.println("               Player 3's Turn");System.out.println();
                 
-                
                 whichPlayer = getPlayer(false,false , true);
                 card = getUserCard(false, false, true);if(card.equals("1"))System.out.println("for a " + card + "0");else System.out.println("for a " + card);
                 endTurn(playerThreeHand, whichPlayer, card, scoreThree, false, false, true, "Player 3 Hand: ", "Player 3 score: ");
+                
                 System.out.println("--------------------------------------------");System.out.println();
-
+                
                 displayAll();
                 
             }
@@ -350,8 +349,6 @@ public class GoFish {
                 }
             }else if("23456789".indexOf(s) >= 0){
                 if(restOf.indexOf(s)>=0){
-                    
-
                     int location1 = cards.indexOf(s);
                     int location2 = cards.lastIndexOf(s);
 
