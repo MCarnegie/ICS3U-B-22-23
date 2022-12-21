@@ -53,8 +53,8 @@ public class GoFish {
             System.out.println("Player 3 Score: " + scoreThree);
 
             
-            //Main gameplay loop: while everybodys score is less than 10, the game will ask the players which player 
-            //they want to take a card from and which card. using this information and more it will use endturn then delay so the user can read what actions happened
+            //Main gameplay loop: while everybody’s score is less than 10, the game will ask the players which player 
+            //they want to take a card from and which card. using this information and more depending on the player, it will use endturn then delay so the user can read what actions happened
             //it will then display all the scores and hands and repeat the loop
             while(scoreOne <10 && scoreTwo<10 && scoreThree<10 && scoreP<10){
                 System.out.println("--------------------------------------------");System.out.println("                  Round " + roundCount);System.out.println();
@@ -92,10 +92,11 @@ public class GoFish {
             }
             endGame();
         }
-
+        
     }
 
     private static String dealCards(){
+        //this method returns five new cards
         return getCard() + " " + getCard() + " " + getCard() + " " + getCard() + " " + getCard();
     }
 
@@ -103,7 +104,7 @@ public class GoFish {
 
     private static void endGame(){
         //endGame() first checks to see if you won and displays a message, it then prompts the user if they want to play again
-        //if they say yes, it will reset all the scores and hands, if they say no, it ends the game. anything else is an invalid response
+        //if they say yes, it will reset all the scores and hands and end the loop, if they say no, it ends the loop and then the game. anything else is an invalid response
         while(true){
                 if(scoreP>=10){
                     System.out.println("YOU WIN!");
@@ -117,10 +118,10 @@ public class GoFish {
                     scoreP = 0;
                     scoreTwo = 0;
                     scoreThree = 0;
-                    yourHand = getCard() + " " + getCard() + " " + getCard() + " " + getCard() + " " + getCard();
-                    playerOneHand = getCard() + " " + getCard() + " " + getCard() + " " + getCard() + " " + getCard();
-                    playerTwoHand = getCard() + " " + getCard() + " " + getCard() + " " + getCard() + " " + getCard();
-                    playerThreeHand = getCard() + " " + getCard() + " " + getCard() + " " + getCard() + " " + getCard();
+                    yourHand = dealCards();
+                    playerOneHand = dealCards();
+                    playerTwoHand = dealCards();
+                    playerThreeHand = dealCards();
                     System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
                     break;
                 }else if(answer.equals("N") || answer.equals("NO")){
@@ -136,6 +137,11 @@ public class GoFish {
 
 
     private static void endTurn(String currentPlayerHand, String whichPlayer, String card, boolean isP1, boolean isP2, boolean isP3, String label){
+        //first, this method takes the current players hand, which player they picked, and the card they picked and uses them to take the card from the player the user picks
+        //afterwards, it displays the hand with the new card and depending on if it is a computer or not will display the hand
+        //next, it checks to see if there are any duplicates and removes them, accordingly, afterwards displaying the score
+        //this must be in an if statement to figure out what score has to be displayed
+        //finally, it displays the new hand with the proper label and with it hidden or not
             currentPlayerHand = takeCards(whichPlayer, currentPlayerHand, card);
             if(isP1 || isP2 || isP3)
                 displayHand(currentPlayerHand, true, label);
@@ -179,8 +185,8 @@ public class GoFish {
 
     private static String getUserCard(boolean isP1, boolean isP2, boolean isP3) {
         //if the method detects that a NPC is playing, it will use the getRandomCard method to get a random card from their hand
-        //if the method detects that the user is playing, it will ask them for a card, if this card is a 10, it will change it to a one for convienince
-        //if its not a ten, it will just return the card, mkaing sure that its in your hand. anything else is a invalid response and will prompt the user again
+        //if the method detects that the user is playing, it will ask them for a card, if this card is a 10, it will change it to a one for convenience
+        //if it’s not a ten, it will just return the card, making sure that it’s in your hand. anything else is a invalid response and will prompt the user again
         if(isP1 || isP2 || isP3){
             if(isP1){
                 return getRandomCard(playerOneHand);
@@ -211,8 +217,8 @@ public class GoFish {
     }
 
     private static String getRandomCard(String currentPlayerHand){
-        //using a temperaory string, it will go through the players hand and add every card that is in their hand to a temp hand
-        //it will then randomly pick a number between 0 and the players hand length which is going to be what card they decide they want
+        //using a temporary string, it will go through the players hand and add every card that is in their hand to a temp hand
+        //it will then randomly pick a number between 0 and the players hand length which is going to be what card they want
         String tempHand = "";
         for (int i = 0; i < currentPlayerHand.length(); i++) {
             String s = currentPlayerHand.substring(i, i+1);
@@ -227,6 +233,9 @@ public class GoFish {
 
 
     private static String getPlayer(boolean isP1, boolean isP2, boolean isP3) {
+         //if the computer is playing, a random number is chosen to decide what player they are going to ask
+        //if the user is playing, the computer will ask them what player they would like to choose and respond accordingly
+        //if anything, other than the player is chosen it will respond with invalid response and ask them again
         if(isP1 || isP2 || isP3){
             int ranP = (int) (Math.random()*3);
             if(isP1){
@@ -284,6 +293,10 @@ public class GoFish {
 
 
     private static String takeCards(String otherHand, String currentPlayerHand, String card) {
+        //this method first iterates through the chosen players hand to see if the card that the player chosen is there
+        //if it is, it will find the location of it in the string and get everything but that card. it will than fix any spacing issues and make hasCard true
+        //it then checks to see if the chosen players hand is empty and add cards accordingly. if the player they chose doesn’t have that card, the method will print go fish and give the current player a random card
+        //finally, the method will assign the hands to the correct players and will return the current players hand
         String temp = otherHand;
         String temp2 = currentPlayerHand;
         boolean hasCard = false;
@@ -310,7 +323,7 @@ public class GoFish {
         }
 
         if(otherHand.length() <=1){
-            otherHand = getCard() + " " + getCard() + " " + getCard() + " " + getCard() + " " + getCard();
+            otherHand = dealCards();
         }
 
         if(!hasCard){
@@ -348,6 +361,11 @@ public class GoFish {
 
 
     private static String NewHand(String cards, boolean isP1, boolean isP2, boolean isP3) {
+        //the method will iterate through the players hand and see if there is a duplicate
+        //if there is, the method will find the first occurrence of the duplicate and the last occurrence of it and make a new string
+        //consisting of everything before the first location, everything between the first and second locations, and everything after the second location
+        //it will then fix any spacing issues and add cards to the players hand if they don’t have any in their hand
+        //finally, it will assign the correct hand to the current player and return the correct hand
         String firstHand = cards;
         String temp = cards;
 
@@ -411,7 +429,7 @@ public class GoFish {
 
         if(firstHand.length() <=1){
             System.out.println("You have no more cards, let me get you some");
-            firstHand = getCard() + " " + getCard() + " " + getCard() + " " + getCard() + " " + getCard();
+            firstHand = dealCards();
         }
         if(temp.equals(playerOneHand)){
             playerOneHand = firstHand;
@@ -428,6 +446,10 @@ public class GoFish {
     }
 
     private static String fixSpaces(String firstHand) {
+        //this method will iterate through the hand and get two letters
+        //if the two letters are spaces it will remove one of the spaces
+        //if the first letter of the string is a space, it will remove it from the string
+        //finally, it will return the fixed string
         for(int b = 0; b<firstHand.length()-1; b++){
             String letter = firstHand.substring(b, b+1);
             String letter2 = firstHand.substring(b+1, b+2);
@@ -463,6 +485,9 @@ public class GoFish {
 
 
     private static void displayHand(String cards, boolean isHidden, String label) {
+        //if isHidden is true, the method will go through the cards and get two letters
+        //if both of these letters are not spaces it will add an XX to the bot hand and will print the bot hand with the label
+        //if isHidden is false, it will print out the label and the cards
         String botHand = "";
         if(isHidden){
            for(int i = 0; i<cards.length()-1; i++){
@@ -484,10 +509,12 @@ public class GoFish {
 
 
     private static String getCard() {
+        //this will get a random value and suit
         return getValue() + getSuit();
     }
 
     private static String getSuit() {
+        //this will choose an random suit
         int iSuit = (int) (Math.random()* NUM_SUITS) + 1;
         if(iSuit == 1)
             return HEARTS;
@@ -501,6 +528,7 @@ public class GoFish {
     }
 
     private static String getValue() {
+        //this will choose a random value
         int iValue = (int)(Math.random()* NUM_VALUES) + 1;
 
         if(iValue == 1)
