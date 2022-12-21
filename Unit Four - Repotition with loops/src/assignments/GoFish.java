@@ -14,7 +14,7 @@ public class GoFish {
     private static final String JACK = "J";
     private static final String QUEEN = "Q";
     private static final String KING = "K";
-    static String yourHand = getCard() + " " + getCard() + " " + getCard() + " " + getCard() + " " + getCard();
+    static String yourHand = "2D 9H 6C 2D 2D";//getCard() + " " + getCard() + " " + getCard() + " " + getCard() + " " + getCard();
     static String playerOneHand = getCard() + " " + getCard() + " " + getCard() + " " + getCard() + " " + getCard();
     static String playerTwoHand = getCard() + " " + getCard() + " " + getCard() + " " + getCard() + " " + getCard();
     static String playerThreeHand = getCard() + " " + getCard() + " " + getCard() + " " + getCard() + " " + getCard();
@@ -28,31 +28,25 @@ public class GoFish {
     public static void main(String[] args)throws InterruptedException{
         
         while(isOver){
-            //gets the score using the first hand
-            scoreP = getScore(yourHand, true, scoreP);
-            scoreOne = getScore(playerOneHand, true, scoreOne);
-            scoreTwo = getScore(playerTwoHand, true, scoreTwo);
-            scoreThree = getScore(playerThreeHand, true, scoreThree);
+            //makes the hands without duplicates and dislplays them
+            yourHand = NewHand(yourHand, false, false, false);
+            displayHand(yourHand, false, "Your Hand: ");
+            
+            playerOneHand = NewHand(playerOneHand, true, false, false);
+            displayHand(playerOneHand, false, "Player 1 Hand: ");
+
+            playerTwoHand = NewHand(playerTwoHand, false, true, false);
+            displayHand(playerTwoHand, false, "Player 2 Hand: ");
+
+            playerThreeHand = NewHand(playerThreeHand, false, false, true);
+            displayHand(playerThreeHand, false, "Player 3 Hand: ");
+            isFirstTurn = false;
 
             //prints the scores
             System.out.println("Your Score: " + scoreP);
             System.out.println("Player 1 Score: " + scoreOne);
             System.out.println("Player 2 Score: " + scoreTwo);
             System.out.println("Player 3 Score: " + scoreThree);
-            
-            //makes the hands without duplicates and dislplays them
-            yourHand = NewHand(yourHand);
-            displayHand(yourHand, false, "Your Hand: ");
-            
-            playerOneHand = NewHand(playerOneHand);
-            displayHand(playerOneHand, true, "Player 1 Hand: ");
-
-            playerTwoHand = NewHand(playerTwoHand);
-            displayHand(playerTwoHand, true, "Player 2 Hand: ");
-
-            playerThreeHand = NewHand(playerThreeHand);
-            displayHand(playerThreeHand, true, "Player 3 Hand: ");
-            isFirstTurn = false;
 
             System.out.println("--------------------------------------------");
             
@@ -63,31 +57,31 @@ public class GoFish {
                 
                 String whichPlayer = getPlayer(false, false , false);
                 String card = getUserCard(false, false , false); 
-                endTurn(yourHand, whichPlayer, card, scoreP, false, false, false, "Your Hand: ", "Your score: ");
+                endTurn(yourHand, whichPlayer, card, false, false, false, "Your Hand: ", "Your score: ");
                 Thread.sleep(5000);
 
                 System.out.println("--------------------------------------------");System.out.println("               Player 1's Turn");System.out.println();
                
                 whichPlayer = getPlayer(true, false , false);
                 card = getUserCard(true, false , false); if(card.equals("1"))System.out.println("for a " + card + "0");else System.out.println("for a " + card);
-                endTurn(playerOneHand, whichPlayer, card, scoreOne, true, false, false, "Player 1 Hand: ", "Player 1 score: ");
+                endTurn(playerOneHand, whichPlayer, card, true, false, false, "Player 1 Hand: ", "Player 1 score: ");
                 Thread.sleep(5000);
 
                 System.out.println("--------------------------------------------");System.out.println("               Player 2's Turn");System.out.println();
                 
                 whichPlayer = getPlayer(false, true , false);
                 card = getUserCard(false, true , false);if(card.equals("1"))System.out.println("for a " + card + "0");else System.out.println("for a " + card);
-                endTurn(playerTwoHand, whichPlayer, card, scoreTwo, false, true, false, "Player 2 Hand: ", "Player 2 score: ");
+                endTurn(playerTwoHand, whichPlayer, card, false, true, false, "Player 2 Hand: ", "Player 2 score: ");
                 Thread.sleep(5000);
 
                 System.out.println("--------------------------------------------");System.out.println("               Player 3's Turn");System.out.println();
                 
                 whichPlayer = getPlayer(false,false , true);
                 card = getUserCard(false, false, true);if(card.equals("1"))System.out.println("for a " + card + "0");else System.out.println("for a " + card);
-                endTurn(playerThreeHand, whichPlayer, card, scoreThree, false, false, true, "Player 3 Hand: ", "Player 3 score: ");
+                endTurn(playerThreeHand, whichPlayer, card, false, false, true, "Player 3 Hand: ", "Player 3 score: ");
                 Thread.sleep(5000);
 
-                System.out.println("--------------------------------------------");System.out.println();
+                System.out.println("--------------------------------------------");System.out.println("                Results");System.out.println();
                 
                 displayAll();
                 
@@ -131,32 +125,30 @@ public class GoFish {
     }
 
 
-    private static void endTurn(String currentPlayerHand, String whichPlayer, String card, int score, boolean isP1, boolean isP2, boolean isP3, String label,  String scoreLabel){
+    private static void endTurn(String currentPlayerHand, String whichPlayer, String card, boolean isP1, boolean isP2, boolean isP3, String label,  String scoreLabel){
             currentPlayerHand = takeCards(whichPlayer, currentPlayerHand, card);
             if(isP1 || isP2 || isP3)
-                displayHand(currentPlayerHand, true, label);
+                displayHand(currentPlayerHand, false, label);
                 
             else
                 displayHand(currentPlayerHand, false, label);
-               
 
             if(isP1){
-                scoreOne = getScore(currentPlayerHand, false, scoreOne);
+                currentPlayerHand = NewHand(currentPlayerHand, true, false, false);
                 System.out.println(scoreLabel + scoreOne);
             }else if(isP2){
-                scoreTwo = getScore(currentPlayerHand, false, scoreTwo);
+                currentPlayerHand = NewHand(currentPlayerHand, false, true, false);
                 System.out.println(scoreLabel + scoreTwo);
             }else if(isP3){
-                scoreThree = getScore(currentPlayerHand, false, scoreThree);
+                currentPlayerHand = NewHand(currentPlayerHand, false, false, true);
                 System.out.println(scoreLabel + scoreThree);
             }else{
-                scoreP = getScore(currentPlayerHand, false, scoreP);
+                currentPlayerHand = NewHand(currentPlayerHand, false, false, false);
                 System.out.println(scoreLabel + scoreP);
             }
-            currentPlayerHand = NewHand(currentPlayerHand);
 
             if(isP1 || isP2 || isP3)
-                displayHand(currentPlayerHand, true, label);
+                displayHand(currentPlayerHand, false, label);
             
             else
                 displayHand(currentPlayerHand, false, label);
@@ -197,10 +189,11 @@ public class GoFish {
                 }
                 if(yourHand.indexOf(card)>=0){
                     return card;
-                }else if(yourHand.indexOf(card)<=0){
-                    System.out.println("you dont have that card");
-                }else{
+                }else if(yourHand.indexOf(card)<0){
+                    if("123456789AKJQ".indexOf(card)<0)
                     System.out.println("Invalid Response, Please say what card you want (2-10, AQJK)");
+                    else
+                    System.out.println("you dont have that card");
                 }
             }
         }
@@ -344,7 +337,7 @@ public class GoFish {
 
 
 
-    private static String NewHand(String cards) {
+    private static String NewHand(String cards, boolean isP1, boolean isP2, boolean isP3) {
         String firstHand = cards;
         String temp = cards;
 
@@ -360,8 +353,34 @@ public class GoFish {
 
                     if(s.equals("1")){
                     newHand = cards.substring(0, location1) + cards.substring(location1+3, location2) + cards.substring(location2+3);
+                    if(isFirstTurn)
+                    System.out.print("");
+                    else 
+                    System.out.println("Pair Found! +1 to score!");
+                    if(isP1){
+                        scoreOne++;
+                    }else if(isP2){
+                        scoreTwo++;
+                    }else if(isP3){
+                        scoreThree++;
+                    }else{
+                        scoreP++;
+                    }
                     }else{
                     newHand = cards.substring(0, location1) + cards.substring(location1+2, location2) + cards.substring(location2+2);
+                    if(isFirstTurn)
+                    System.out.print("");
+                    else 
+                    System.out.println("Pair Found! +1 to score!");
+                    if(isP1){
+                        scoreOne++;
+                    }else if(isP2){
+                        scoreTwo++;
+                    }else if(isP3){
+                        scoreThree++;
+                    }else{
+                        scoreP++;
+                    }
                     }
                     
                     cards = newHand;
@@ -375,6 +394,19 @@ public class GoFish {
                     int location2 = cards.lastIndexOf(s);
 
                     String newHand = cards.substring(0, location1) + cards.substring(location1+2, location2) + cards.substring(location2+2);
+                    if(isFirstTurn)
+                    System.out.print("");
+                    else 
+                    System.out.println("Pair Found! +1 to score!");
+                    if(isP1){
+                        scoreOne++;
+                    }else if(isP2){
+                        scoreTwo++;
+                    }else if(isP3){
+                        scoreThree++;
+                    }else{
+                        scoreP++;
+                    }
                     cards = newHand;
                     i = 0; 
                 }
@@ -438,39 +470,6 @@ public class GoFish {
 
     }
 
-
-
-    private static int getScore(String cards, boolean isFirstTurn, int playerScore) {
-       int score = playerScore;
-
-        for(int i = 0; i<cards.length(); i++){
-            String s = cards.substring(i, i+1);
-            String restOf = cards.substring(i+1);
-            if("JQK1A".indexOf(s)>=0){
-                if(restOf.indexOf(s)>=0){
-                    if(isFirstTurn)
-                    System.out.print("");
-                    else 
-                    System.out.println("Pair Found! +1 to score!");
-                    score++;
-                }
-            }else if("23456789".indexOf(s) >= 0){
-                if(restOf.indexOf(s)>=0){
-                    if(isFirstTurn)
-                    System.out.print("");
-                    else 
-                    System.out.println("Pair Found! +1 to score!");
-                    score++;
-                }
-            }
-
-        }
-        if(isFirstTurn && score>=3){
-            score--;
-        }
-        
-        return score;
-    }
 
     private static void displayHand(String cards, boolean isHidden, String label) {
         String botHand = "";
