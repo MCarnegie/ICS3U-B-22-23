@@ -155,7 +155,7 @@ public class GoFish {
    }
 
     private static void displayAll(){
-        //displays the scores and hands of teh players
+        //displays the scores and hands of the players
         displayHand(yourHand, false, "Your Hand: ");
         displayHand(playerOneHand, true, "Player 1 Hand: ");
         displayHand(playerTwoHand, true, "Player 2 Hand: ");
@@ -354,33 +354,18 @@ public class GoFish {
                     if(s.equals("1")){
                     newHand = cards.substring(0, location1) + cards.substring(location1+3, location2) + cards.substring(location2+3);
                     if(isFirstTurn)
-                    System.out.print("");
+                        System.out.print("");
                     else 
-                    System.out.println("Pair Found! +1 to score!");
-                    if(isP1){
-                        scoreOne++;
-                    }else if(isP2){
-                        scoreTwo++;
-                    }else if(isP3){
-                        scoreThree++;
-                    }else{
-                        scoreP++;
-                    }
+                        System.out.println("Pair Found! +1 to score!");
+                    if(isP1){scoreOne++;}else if(isP2){scoreTwo++;}else if(isP3){scoreThree++; }else{scoreP++;}
+
                     }else{
                     newHand = cards.substring(0, location1) + cards.substring(location1+2, location2) + cards.substring(location2+2);
                     if(isFirstTurn)
-                    System.out.print("");
+                        System.out.print("");
                     else 
-                    System.out.println("Pair Found! +1 to score!");
-                    if(isP1){
-                        scoreOne++;
-                    }else if(isP2){
-                        scoreTwo++;
-                    }else if(isP3){
-                        scoreThree++;
-                    }else{
-                        scoreP++;
-                    }
+                        System.out.println("Pair Found! +1 to score!");
+                    if(isP1){scoreOne++;}else if(isP2){scoreTwo++;}else if(isP3){scoreThree++;}else{scoreP++;}
                     }
                     
                     cards = newHand;
@@ -395,18 +380,11 @@ public class GoFish {
 
                     String newHand = cards.substring(0, location1) + cards.substring(location1+2, location2) + cards.substring(location2+2);
                     if(isFirstTurn)
-                    System.out.print("");
+                        System.out.print("");
                     else 
-                    System.out.println("Pair Found! +1 to score!");
-                    if(isP1){
-                        scoreOne++;
-                    }else if(isP2){
-                        scoreTwo++;
-                    }else if(isP3){
-                        scoreThree++;
-                    }else{
-                        scoreP++;
-                    }
+                        System.out.println("Pair Found! +1 to score!");
+                    if(isP1){scoreOne++;}else if(isP2){scoreTwo++;}else if(isP3){scoreThree++; }else{scoreP++;}
+
                     cards = newHand;
                     i = 0; 
                 }
