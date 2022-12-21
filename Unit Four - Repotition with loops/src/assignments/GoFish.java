@@ -28,16 +28,19 @@ public class GoFish {
     public static void main(String[] args)throws InterruptedException{
         
         while(isOver){
+            //gets the score using the first hand
             scoreP = getScore(yourHand, true, scoreP);
             scoreOne = getScore(playerOneHand, true, scoreOne);
             scoreTwo = getScore(playerTwoHand, true, scoreTwo);
             scoreThree = getScore(playerThreeHand, true, scoreThree);
 
+            //prints the scores
             System.out.println("Your Score: " + scoreP);
             System.out.println("Player 1 Score: " + scoreOne);
             System.out.println("Player 2 Score: " + scoreTwo);
             System.out.println("Player 3 Score: " + scoreThree);
             
+            //makes the hands without duplicates and dislplays them
             yourHand = NewHand(yourHand);
             displayHand(yourHand, false, "Your Hand: ");
             
@@ -53,31 +56,37 @@ public class GoFish {
 
             System.out.println("--------------------------------------------");
             
+            //Main gameplay loop: while everybodys score is less than 10, the game will ask the players which player 
+            //they want to take a card from and which card. using this information and more it will use endturn then delay so the user can read what actions happened
+            //it will then display all the scores and hands and repeat the loop
             while(scoreOne <10 && scoreTwo<10 && scoreThree<10 && scoreP<10){
                 
                 String whichPlayer = getPlayer(false, false , false);
                 String card = getUserCard(false, false , false); 
                 endTurn(yourHand, whichPlayer, card, scoreP, false, false, false, "Your Hand: ", "Your score: ");
-                Thread.sleep(2000);
+                Thread.sleep(5000);
 
                 System.out.println("--------------------------------------------");System.out.println("               Player 1's Turn");System.out.println();
                
                 whichPlayer = getPlayer(true, false , false);
                 card = getUserCard(true, false , false); if(card.equals("1"))System.out.println("for a " + card + "0");else System.out.println("for a " + card);
                 endTurn(playerOneHand, whichPlayer, card, scoreOne, true, false, false, "Player 1 Hand: ", "Player 1 score: ");
-                
+                Thread.sleep(5000);
+
                 System.out.println("--------------------------------------------");System.out.println("               Player 2's Turn");System.out.println();
                 
                 whichPlayer = getPlayer(false, true , false);
                 card = getUserCard(false, true , false);if(card.equals("1"))System.out.println("for a " + card + "0");else System.out.println("for a " + card);
                 endTurn(playerTwoHand, whichPlayer, card, scoreTwo, false, true, false, "Player 2 Hand: ", "Player 2 score: ");
-                
+                Thread.sleep(5000);
+
                 System.out.println("--------------------------------------------");System.out.println("               Player 3's Turn");System.out.println();
                 
                 whichPlayer = getPlayer(false,false , true);
                 card = getUserCard(false, false, true);if(card.equals("1"))System.out.println("for a " + card + "0");else System.out.println("for a " + card);
                 endTurn(playerThreeHand, whichPlayer, card, scoreThree, false, false, true, "Player 3 Hand: ", "Player 3 score: ");
-                
+                Thread.sleep(5000);
+
                 System.out.println("--------------------------------------------");System.out.println();
                 
                 displayAll();
@@ -89,13 +98,15 @@ public class GoFish {
     }
 
     private static void endGame(){
+        //endGame() first checks to see if you won and displays a message, it then prompts the user if they want to play again
+        //if they say yes, it will reset all the scores and hands, if they say no, it ends the game. anything else is an invalid response
         while(true){
                 if(scoreP>=10){
                     System.out.println("YOU WIN!");
                 }else{
                     System.out.println("YOU LOSE");
                 }
-                System.out.println("Do you want to play again");
+                System.out.println("Do you want to play again?");
                 String answer = in.nextLine().toUpperCase();
                 if(answer.equals("Y") || answer.equals("YES") || answer.equals("YEAH")){
                     scoreOne = 0;
@@ -122,10 +133,12 @@ public class GoFish {
 
     private static void endTurn(String currentPlayerHand, String whichPlayer, String card, int score, boolean isP1, boolean isP2, boolean isP3, String label,  String scoreLabel){
             currentPlayerHand = takeCards(whichPlayer, currentPlayerHand, card);
-            if(!isP1 || !isP2 || !isP3)
-                displayHand(currentPlayerHand, false, label);
+            if(isP1 || isP2 || isP3)
+                displayHand(currentPlayerHand, true, label);
+                
             else
-                displayHand(currentPlayerHand, true, label);//is hidden should be true at the end
+                displayHand(currentPlayerHand, false, label);
+               
 
             if(isP1){
                 scoreOne = getScore(currentPlayerHand, false, scoreOne);
@@ -142,17 +155,19 @@ public class GoFish {
             }
             currentPlayerHand = NewHand(currentPlayerHand);
 
-            if(!isP1 || !isP2 || !isP3)
-                displayHand(currentPlayerHand, false, label);
+            if(isP1 || isP2 || isP3)
+                displayHand(currentPlayerHand, true, label);
+            
             else
-                displayHand(currentPlayerHand, true, label);//is hidden should be true at the end
+                displayHand(currentPlayerHand, false, label);
    }
 
     private static void displayAll(){
+        //displays the scores and hands of teh players
         displayHand(yourHand, false, "Your Hand: ");
-        displayHand(playerOneHand, false, "Player 1 Hand: ");
-        displayHand(playerTwoHand, false, "Player 2 Hand: ");
-        displayHand(playerThreeHand, false, "Player 3 Hand: ");
+        displayHand(playerOneHand, true, "Player 1 Hand: ");
+        displayHand(playerTwoHand, true, "Player 2 Hand: ");
+        displayHand(playerThreeHand, true, "Player 3 Hand: ");
         System.out.println("Your Score: " + scoreP);
         System.out.println("Player 1 Score: " + scoreOne);
         System.out.println("Player 2 Score: " + scoreTwo);
@@ -161,6 +176,9 @@ public class GoFish {
     }
 
     private static String getUserCard(boolean isP1, boolean isP2, boolean isP3) {
+        //if the method detects that a NPC is playing, it will use the getRandomCard method to get a random card from their hand
+        //if the method detects that the user is playing, it will ask them for a card, if this card is a 10, it will change it to a one for convienince
+        //if its not a ten, it will just return the card, mkaing sure that its in your hand. anything else is a invalid response and will prompt the user again
         if(isP1 || isP2 || isP3){
             if(isP1){
                 return getRandomCard(playerOneHand);
@@ -179,8 +197,10 @@ public class GoFish {
                 }
                 if(yourHand.indexOf(card)>=0){
                     return card;
-                }else{
+                }else if(yourHand.indexOf(card)<=0){
                     System.out.println("you dont have that card");
+                }else{
+                    System.out.println("Invalid Response, Please say what card you want (2-10, AQJK)");
                 }
             }
         }
@@ -188,6 +208,8 @@ public class GoFish {
     }
 
     private static String getRandomCard(String currentPlayerHand){
+        //using a temperaory string, it will go through the players hand and add every card that is in their hand to a temp hand
+        //it will then randomly pick a number between 0 and the players hand length which is going to be what card they decide they want
         String tempHand = "";
         for (int i = 0; i < currentPlayerHand.length(); i++) {
             String s = currentPlayerHand.substring(i, i+1);
