@@ -18,10 +18,10 @@ public class GoFish {
     static String playerOneHand = dealCards();
     static String playerTwoHand = dealCards();
     static String playerThreeHand = dealCards();
-    static int scoreP = 8;
-    static int scoreOne = 8;
-    static int scoreTwo = 8;
-    static int scoreThree = 8;
+    static int scoreP = 0;
+    static int scoreOne = 0;
+    static int scoreTwo = 0;
+    static int scoreThree = 0;
     static boolean isOver = true;
     static boolean isFirstTurn = true;
     
@@ -95,6 +95,7 @@ public class GoFish {
                 roundCount++;
                 
             }
+            roundCount = 1;
             endGame();
         }
         
@@ -310,6 +311,8 @@ public class GoFish {
             String s = otherHand.substring(i, i+1);
             if(card.equals(s)){
                 if(card.equals("1")){
+                    if(temp2.equals(yourHand))System.out.println("You got the card");
+                    else System.out.println("They got the card");
                     otherHand = otherHand.substring(0, otherHand.indexOf(card)) + otherHand.substring(otherHand.indexOf(card)+3);
                     otherHand = fixSpaces(otherHand);
                     currentPlayerHand = currentPlayerHand + " " + card + "0" + getSuit();
@@ -317,6 +320,8 @@ public class GoFish {
                     hasCard = true;
                     
                 }else{
+                    if(temp2.equals(yourHand))System.out.println("You got the card");
+                    else System.out.println("They got the card");
                     otherHand = otherHand.substring(0, otherHand.indexOf(card)) + otherHand.substring(otherHand.indexOf(card)+2);
                     otherHand = fixSpaces(otherHand);
                     currentPlayerHand = currentPlayerHand + " " + card + getSuit();
