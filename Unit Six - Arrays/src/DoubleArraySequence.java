@@ -177,6 +177,7 @@ public class DoubleArraySequence implements Cloneable {
          }
 
          arr[start] = element;
+         currentIndex = start;
          manyItems++;
          data = arr;
     }
@@ -304,8 +305,19 @@ public class DoubleArraySequence implements Cloneable {
      *       that will cause the sequence to fail.
      **/
     public static DoubleArraySequence catenation(DoubleArraySequence s1, DoubleArraySequence s2) {
-       return null;
- 
+       
+         DoubleArraySequence arr = new DoubleArraySequence(s1.manyItems + s2.manyItems);
+         arr.manyItems = s1.manyItems + s2.manyItems;
+         arr.currentIndex = arr.manyItems;
+            for (int i = 0; i < s1.manyItems; i++) {
+            arr.data[i] = s1.data[i];
+            }
+            for (int j = 0; j < s2.manyItems; j++) {
+               arr.data[s1.manyItems+j] = s2.data[j];
+            }
+
+         return arr;
+
     }
  
     /**
@@ -405,13 +417,21 @@ public class DoubleArraySequence implements Cloneable {
      *                                  removeCurrent may not be called.
      **/
     public void removeCurrent() {
-         double[] arr = new double[data.length];
+      if(currentIndex == manyItems)
+         throw new IllegalStateException("no current element");
 
          int start = currentIndex;
+         data[currentIndex] = 0;
+         for (int i = start; i < data.length-1; i++) {
+            data[i] = data[i+1];
+            data[i+1] = 0;
+         }
 
-         
          manyItems--;
-         data = arr;
+         if(manyItems == 0){
+            currentIndex = manyItems;
+         }
+        
     }
  
     /**

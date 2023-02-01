@@ -84,7 +84,7 @@ public class DoubleArraySequenceTest {
        d3.addBefore(7.0);
        score += test(d3, new double[] { 7.0 }, 0, 1, 5, 2);
        d3.addBefore(6.0);
-       score += test(d3, new double[] { 6.0, 7.0 }, 0, 2, 5, 2);//passed all pervious ones
+       score += test(d3, new double[] { 6.0, 7.0 }, 0, 2, 5, 2);
        d3.removeCurrent();
        score += test(d3, new double[] { 7.0 }, 0, 1, 5, 2);
        d3.removeCurrent();
@@ -94,12 +94,12 @@ public class DoubleArraySequenceTest {
           d3.addBefore(i);
        }
        score += test(d3, new double[] { 9.0, 8.0, 7.0, 6.0, 5.0, 4.0, 3.0, 2.0, 1.0, 0.0 }, 0, 10, 10, 2);
- 
+       
        DoubleArraySequence d4 = DoubleArraySequence.catenation(d2, d3);
        score += test(d4, new double[] { 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 9.0, 8.0, 7.0, 6.0, 5.0, 4.0, 3.0, 2.0, 1.0, 0.0 },
              16, 16, 16, 5);
        score += test(d4, new double[] { 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 9.0, 8.0, 7.0, 6.0, 5.0, 4.0, 3.0, 2.0, 1.0, 0.0 },
-             16, 16, 25, 5);
+             16, 16, 25, 5);//didnt pass this one, points werent needed though
  
        try {
           d4.getCurrent();
@@ -129,7 +129,7 @@ public class DoubleArraySequenceTest {
        } catch (IllegalStateException ex) {
           score++;
        }
- 
+
        d2.addBefore(12.0);
        score += test(d2, new double[] { 12.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 1.0 }, 0, 8, 25, 2);
  
