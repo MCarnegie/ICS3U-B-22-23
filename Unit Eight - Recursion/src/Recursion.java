@@ -25,8 +25,6 @@ public class Recursion {
            return binarySearchRecursion(arr, find, min, mid-1);
         else
             return binarySearchRecursion(arr, find, min, mid+1);
-        
-
     }
 
     private static int binarySearch(int[] arr, int i) {
